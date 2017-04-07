@@ -46,9 +46,6 @@ class YandexMetrika(object):
             'metrics': 'ym:s:visits'
         }
         response = requests.get(url, params=params, headers=headers)
-        # print(response)
-        # print(response.headers['Content-Type'])
-        # pprint(response.json())
         visits_count = response.json()['data'][0]['metrics'][0]
         return visits_count
 
@@ -74,15 +71,12 @@ class YandexMetrika(object):
         users_count = response.json()['data'][0]['metrics'][0]
         return users_count
 
-metrika = YandexMetrika(TOKEN)
-# print(metrika.counter_list)
+def get_my_counter_mertic():
+    metrika = YandexMetrika(TOKEN)
+    for counter in metrika.counter_list:
+        print("Количество визитов: {}" .format(metrika.get_visits_count(counter)))
+        print("Количество просмотров: {}".format(metrika.get_pageviews_count(counter)))
+        print("Количество посетителей: {}".format(metrika.get_users_count(counter)))
 
-for counter in metrika.counter_list:
-      # print(counter)
-      print("Количество визитов: {}" .format(metrika.get_visits_count(counter)))
-      print("Количество просмотров: {}".format(metrika.get_pageviews_count(counter)))
-      print("Количество посетителей: {}".format(metrika.get_users_count(counter)))
 
-      # print(metrika.get_visits_count(counter))
-# metrika.get_visits_count(44021819)
-# metrika.get_pageviews_count(44021819)
+get_my_counter_mertic()
